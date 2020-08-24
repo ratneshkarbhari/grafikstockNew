@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Currency switcher
+ *
+ * @see \Magento\Directory\Block\Currency
+ */
+?>
+<?php if ($block->getCurrencyCount() > 1): ?>
+<?php $currencies = $block->getCurrencies(); ?>
+<?php $currentCurrencyCode = $block->getCurrentCurrencyCode(); ?>
+<?php $id = $block->getIdModifier() ? '-' . $block->getIdModifier() : ''?>
+<div class="switcher currency switcher-currency" id="switcher-currency<?php /* @escapeNotVerified */ echo $id?>">
+    <strong class="label switcher-label"><span><?php /* @escapeNotVerified */ echo __('Currency') ?></span></strong>
+    <div class="actions dropdown options switcher-options">
+        <div class="action toggle switcher-trigger" id="switcher-currency-trigger<?php /* @escapeNotVerified */ echo $id?>">
+            <strong class="language-<?php echo $block->escapeHtml($block->getCurrentCurrencyCode()) ?>">
+                <span><?php echo $block->escapeHtml($currentCurrencyCode) ?><?php if(!$this->helper('Smartwave\Porto\Helper\Data')->getConfig('porto_settings/header/currency_short')): ?> - <?php echo @$block->escapeHtml($currencies[$currentCurrencyCode]) ?><?php endif; ?></span>
+            </strong>
+        </div>
+        <ul class="dropdown switcher-dropdown" data-mage-init='{"dropdownDialog":{
+            "appendTo":"#switcher-currency<?php /* @escapeNotVerified */ echo $id?> > .options",
+            "triggerTarget":"#switcher-currency-trigger<?php /* @escapeNotVerified */ echo $id?>",
+            "closeOnMouseLeave": false,
+            "triggerClass":"active",
+            "parentClass":"active",
+            "buttons":null}}'>
+            <?php foreach ($currencies as $_code => $_name): ?>
+                <?php if ($_code != $currentCurrencyCode): ?>
+                    <li class="currency-<?php /* @escapeNotVerified */ echo $_code ?> switcher-option">
+                        <a href="#" data-post='<?php /* @escapeNotVerified */ echo $block->getSwitchCurrencyPostData($_code); ?>'><?php /* @escapeNotVerified */ echo $_code ?> - <?php /* @escapeNotVerified */ echo $_name ?></a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
+<?php endif; ?>
+<div class="social-icons top-social-icons" style="float:left;">
+        <a href="https://www.facebook.com/" title="Facebook" target="_blank"><i class="porto-icon-facebook"></i></a>
+        <a href="https://twitter.com/" title="Twitter" target="_blank"><i class="porto-icon-twitter"></i></a>
+        <a href="https://instagram.com/" title="instagram" target="_blank"><i class="porto-icon-instagram"></i></a>
+        <a href="https://linkedin.com/" title="Linkedin" target="_blank"><i class="porto-icon-linkedin-squared"></i></a>
+        <a href="tel:+919137976398" title="Call" target="_blank"><i class="porto-icon-phone"></i> +919137976398</a>
+      </div>
+      
+
+        <span style="padding: 0; margin: 0; margin-left: 6% !important;" class="text-center tagline-text" id="tagline-text">High Quality | Creative | Instant Download | 2x7 Support</span>

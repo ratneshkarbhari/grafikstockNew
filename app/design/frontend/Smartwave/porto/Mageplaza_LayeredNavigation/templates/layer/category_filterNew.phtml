@@ -1,0 +1,103 @@
+
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category'); //Get Current Category
+?>
+<?php if($category): ?>
+<?php 
+$subcats = $category->getChildrenCategories();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+    if(count($subcats)>0){
+?>
+<?php if(count($subcats)>4): ?>
+<div class="block-category-list" id="five-cats">
+    <div class="block-title">
+        <strong><?php echo $category->getName() ?></strong>
+    </div>
+    <div class="block-content">
+        <ol class="items">
+        <?php
+        $xCount = 0;
+        foreach($subcats as $subcat){ 
+        ?>
+        <?php if($xCount<4): ?>
+            <li class="item">
+                <a href="<?php echo $subcat->getUrl() ?>"><?php echo $subcat->getName() ?></a>
+            </li>
+        <?php $xCount++; endif; ?>
+        <?php
+            }
+        ?>
+        </ol>
+        <br>
+        <button type="button" title="Show All" class="action primary" id="show-all-cats-trigger">
+            <span>Show All</span>
+        </button>
+    </div>
+    
+</div>
+<div class="block-category-list" id="all-cats" style="display: none;">
+    <div class="block-title">
+        <strong><?php echo $category->getName() ?></strong>
+    </div>
+    <div class="block-content">
+        <ol class="items">
+        <?php
+        foreach($subcats as $subcat){ 
+        ?>
+            <li class="item">
+                <a href="<?php echo $subcat->getUrl() ?>"><?php echo $subcat->getName() ?></a>
+            </li>
+        <?php
+            }
+        ?>
+        </ol>
+    </div>
+    
+</div>
+<?php else: ?>
+<div class="block-category-list" id="all-cats-default" >
+    <div class="block-title">
+        <strong><?php echo $category->getName() ?></strong>
+    </div>
+    <div class="block-content">
+        <ol class="items">
+        <?php
+        foreach($subcats as $subcat){ 
+        ?>
+            <li class="item">
+                <a href="<?php echo $subcat->getUrl() ?>"><?php echo $subcat->getName() ?></a>
+            </li>
+        <?php
+            }
+        ?>
+        </ol>
+    </div>
+    
+</div>
+<?php endif; ?>
+
+<?php
+    }
+?>
+<?php endif; ?>
+
+<script type="text/javascript">
+    require([
+        'jquery'
+    ], function ($) {
+        $("#layered-filter-block").before($(".block.block-category-list"));
+    });
+    </script>
+    <script type="text/javascript">
+    require([
+        'jquery'
+    ], function ($) {
+        $("button#show-all-cats-trigger").click(
+            function () {
+                $("div#five-cats").css('display','none');
+                $("div#all-cats").css('display','block');
+            }
+        );
+    });
+    </script>
