@@ -1,0 +1,23 @@
+Install Apache, MySQL , PHP and PHPMyAdmin
+Install git and composer
+Create a Database grafikstock with coallition latin1_swedish_ci
+Import the dump.sql in this newly created database.
+Bash scripts to run after git clone:
+
+bin/magento setup:install --base-url=url --db-host=localhost --db-name=grafikstock --db-user=root --db-password=ratnesh47 --backend-frontname=storemgt --admin-firstname=Ratnesh --admin-lastname=Karbhari --admin-email=codesevaco@gmail.com --admin-user=gstockadmin --admin-password=ratnesh@47 --language=en_US --currency=INR --timezone=UTC --use-rewrites=1
+
+sudo usermod -g www-data username
+
+sudo chown -R username:www-data /var/www/html/ (If it is deployed directly to server root)
+
+sudo chmod -R 775 /var/www/html/ (If it is deployed directly to server root)
+
+bin/magento setup:di:compile (to install any missing classes).
+
+bin/magento setup:upgrade
+
+bin/magento c:f (Flush all cache)
+
+This sets proper permissions on all folders:
+
+find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} + && find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} + && chown -R :www-data . && chmod u+x bin/magento 
